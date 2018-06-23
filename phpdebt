@@ -1,40 +1,50 @@
 #!/bin/bash
 
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
 FAULTS=0
 FOLDER=$1
 
-FAULT=$(./vendor/bin/phpmd $FOLDER text cleancode | wc -l)
+echo $(which phpmd)
+
+FAULT=$($DIR/phpmd $FOLDER text cleancode | wc -l)
 FAULTS=$((FAULTS + FAULT)) 
 echo "phpmd cleancode: $FAULT"
 
-FAULT=$(./vendor/bin/phpmd $FOLDER text codesize | wc -l)
+FAULT=$($DIR/phpmd $FOLDER text codesize | wc -l)
 FAULTS=$((FAULTS + FAULT)) 
 echo "phpmd codesize: $FAULT"
 
-FAULT=$(./vendor/bin/phpmd $FOLDER text design | wc -l)
+FAULT=$($DIR/phpmd $FOLDER text design | wc -l)
 FAULTS=$((FAULTS + FAULT)) 
 echo "phpmd design: $FAULT"
 
-FAULT=$(./vendor/bin/phpmd $FOLDER text naming | wc -l)
+FAULT=$($DIR/phpmd $FOLDER text naming | wc -l)
 FAULTS=$((FAULTS + FAULT)) 
 echo "phpmd naming: $FAULT"
 
-FAULT=$(./vendor/bin/phpmd $FOLDER text unusedcode | wc -l)
+FAULT=$($DIR/phpmd $FOLDER text unusedcode | wc -l)
 FAULTS=$((FAULTS + FAULT)) 
 echo "phpmd unusedcode: $FAULT"
 
-FAULT=$(./vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
+FAULT=$($DIR/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
 FAULT=$(echo $FAULT | bc)
 FAULTS=$((FAULTS + FAULT))
 echo "phpcs Drupal: $FAULT"
 
-FAULT=$(./vendor/bin/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
+FAULT=$($DIR/phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
 FAULT=$(echo $FAULT | bc)
 FAULTS=$((FAULTS + FAULT))
 echo "phpcs DrupalPractice: $FAULT"
 
 #TOTAL=$(cloc $FOLDER --md --exclude-ext=json | sed -n -r 's/SUM:\|.*\|(.*)/\1/p')
-TOTAL=$(./vendor/bin/phploc $FOLDER | sed -n -r 's/.*\(NCLOC\) *(.*) \(.*\)/\1/p')
+TOTAL=$($DIR/phploc $FOLDER | sed -n -r 's/.*\(NCLOC\) *(.*) \(.*\)/\1/p')
 PERCENT=$(echo "scale=2; ($FAULTS / $TOTAL) * 100" | bc | sed -n -r 's/(.*)\..*/\1/p')
 if [ -z $PERCENT ]
 then
