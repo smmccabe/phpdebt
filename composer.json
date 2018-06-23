@@ -1,7 +1,6 @@
 {
     "name": "smccabe/phpdebt",
     "description": "A technical debt calculator for PHP",
-    "type": "project",
     "require": {
         "phpmd/phpmd": "^2.6",
         "phploc/phploc": "^4.0",
