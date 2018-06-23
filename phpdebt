@@ -1,0 +1,45 @@
+#!/bin/bash
+
+FAULTS=0
+FOLDER=$1
+
+FAULT=$(phpmd $FOLDER text cleancode | wc -l)
+FAULTS=$((FAULTS + FAULT)) 
+echo "phpmd cleancode: $FAULT"
+
+FAULT=$(phpmd $FOLDER text codesize | wc -l)
+FAULTS=$((FAULTS + FAULT)) 
+echo "phpmd codesize: $FAULT"
+
+FAULT=$(phpmd $FOLDER text design | wc -l)
+FAULTS=$((FAULTS + FAULT)) 
+echo "phpmd design: $FAULT"
+
+FAULT=$(phpmd $FOLDER text naming | wc -l)
+FAULTS=$((FAULTS + FAULT)) 
+echo "phpmd naming: $FAULT"
+
+FAULT=$(phpmd $FOLDER text unusedcode | wc -l)
+FAULTS=$((FAULTS + FAULT)) 
+echo "phpmd unusedcode: $FAULT"
+
+FAULT=$(phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
+FAULT=$(echo $FAULT | bc)
+FAULTS=$((FAULTS + FAULT))
+echo "phpcs Drupal: $FAULT"
+
+FAULT=$(phpcs --standard=DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md $FOLDER --report=summary | sed -n -r 's/A TOTAL OF (.*) ERRORS AND (.*) WARNINGS.*/\1 + \2/p')
+FAULT=$(echo $FAULT | bc)
+FAULTS=$((FAULTS + FAULT))
+echo "phpcs DrupalPractice: $FAULT"
+
+TOTAL=$(cloc $FOLDER --md --exclude-ext=json | sed -n -r 's/SUM:\|.*\|(.*)/\1/p')
+PERCENT=$(echo "scale=2; ($FAULTS / $TOTAL) * 100" | bc | sed -n -r 's/(.*)\..*/\1/p')
+if [ -z $PERCENT ]
+then
+  PERCENT=0
+fi  
+
+echo "Total Faults: $FAULTS
+Total Lines: $TOTAL
+Quality Score: $PERCENT"
