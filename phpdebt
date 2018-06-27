@@ -41,8 +41,7 @@ FAULT=$(echo $FAULT | bc)
 FAULTS=$((FAULTS + FAULT))
 echo "phpcs DrupalPractice: $FAULT"
 
-#TOTAL=$(cloc $FOLDER --md --exclude-ext=json | sed -n -r 's/SUM:\|.*\|(.*)/\1/p')
-TOTAL=$($DIR/phploc $FOLDER | sed -n -r 's/.*\(NCLOC\) *(.*) \(.*\)/\1/p')
+TOTAL=$($DIR/phploc --names=*.php,*.module,*.install,*.inc,*.js,*.scss $FOLDER | sed -n -r 's/.*\(NCLOC\) *(.*) \(.*\)/\1/p')
 PERCENT=$(echo "scale=2; ($FAULTS / $TOTAL) * 100" | bc | sed -n -r 's/(.*)\..*/\1/p')
 if [ -z $PERCENT ]
 then
@@ -51,4 +50,4 @@ fi
 
 echo "Total Faults: $FAULTS
 Total Lines: $TOTAL
-Quality Score: $PERCENT"
+Quality Score: $PERCENT faults per 100 lines"
