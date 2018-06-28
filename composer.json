@@ -1,5 +1,5 @@
 {
-    "name": "smccabe/phpdebt",
+    "name": "smmccabe/phpdebt",
     "description": "A technical debt calculator for PHP",
     "require": {
         "phpmd/phpmd": "^2.6",
