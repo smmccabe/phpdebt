@@ -6,5 +6,5 @@ Currently works primarly against Drupal modules
 ## Installation
 
 ```
-composer global require smccabe/phpdebt
+composer global require smmccabe/phpdebt
 ```
