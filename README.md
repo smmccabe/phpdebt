@@ -10,7 +10,7 @@ Currently works primarly against Drupal
 ### Composer
 
 ```
-composer global require smccabe/phpdebt
+composer global require smmccabe/phpdebt
 ```
 
 Git
