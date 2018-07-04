@@ -74,7 +74,7 @@ Faults per 100 lines:
 * __< 6__ - Good Code
 * __< 10__ - Decent Code
 * __< 25__ - Needs work, cleanup should be prioritized of most feature work
-* __>=__ 25 Needs significant work, cleanup should be prioritized over any feature work or bugfixes.
+* __>= 25__ Needs significant work, cleanup should be prioritized over any feature work or bugfixes.
 
 ### Fixing Found Faults
 
