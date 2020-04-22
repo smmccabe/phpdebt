@@ -1,12 +1,7 @@
 {
     "name": "smmccabe/phpdebt",
-    "description": "A technical debt calculator for PHP",
-    "require": {
-        "phpmd/phpmd": "^2.6",
-        "phploc/phploc": "^4.0",
-        "drupal/coder": "^8.2",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
-    },
+    "description": "App that uses a few code health tools to give an estimated technical debt score.",
+    "type": "project",
     "license": "GPL-3.0-or-later",
     "authors": [
         {
@@ -14,5 +9,24 @@
             "email": "smccabe@acromediainc.com"
         }
     ],
-    "bin": ["phpdebt"]
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/smmccabe/phpmd.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/smmccabe/PHP_CodeSniffer.git"
+        }
+    ],
+    "require": {
+        "squizlabs/php_codesniffer": "dev-api-friendly as 3.x-dev",
+        "drupal/coder": "^8.3",
+        "phpmd/phpmd": "dev-api-friendly",
+        "phploc/phploc": "^6.0"
+    },
+    "require-dev": {
+        "clue/phar-composer": "^1.1"
+    },
+    "bin": ["src/index.php"]
 }
