@@ -7,28 +7,21 @@ Currently works primarly against Drupal
 
 ## Installation
 
+### Phar (recommended)
+
+You may get dependency conflicts when using composer, so a phar installation is often easiest.
+
+```
+wget https://github.com/smmccabe/phpdebt/releases/download/1.0.0/phpdebt.phar
+chmod +x phpdebt.phar
+sudo mv phpdebt.phar /usr/local/bin/phpdebt
+```
+
 ### Composer
 
 ```
-composer global require smmccabe/phpdebt
+composer require smmccabe/phpdebt
 ```
-
-Git
-
-You will need to manually install the below requirements if you don't wish to use composer.
-
-```
-git clone https://github.com/smmccabe/phpdebt.git
-cd phpdebt
-./phpdebt
-```
-
-## Requirements
-
-* [bc](https://www.gnu.org/software/bc/manual/html_mono/bc.html)
-* [phpmd](https://phpmd.org/)
-* [phpcs](https://github.com/squizlabs/PHP_CodeSniffer)
-* [coder](https://www.drupal.org/project/coder)
 
 ## Usage and Examples
 
