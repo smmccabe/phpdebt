@@ -7,20 +7,10 @@ Currently works primarly against Drupal
 
 ## Installation
 
-### Phar (recommended)
-
-You may get dependency conflicts when using composer, so a phar installation is often easiest.
-
 ```
 wget https://github.com/smmccabe/phpdebt/releases/download/1.0.1/phpdebt.phar
 chmod +x phpdebt.phar
 sudo mv phpdebt.phar /usr/local/bin/phpdebt
-```
-
-### Composer
-
-```
-composer require smmccabe/phpdebt
 ```
 
 ## Usage and Examples

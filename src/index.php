@@ -44,7 +44,7 @@ $runner = new Runner();
 
 $runner->config = new Config();
 $runner->config->files = [$path];
-$runner->config->standards = ['./vendor/drupal/coder/coder_sniffer/Drupal'];
+$runner->config->standards = ['Drupal'];
 $runner->config->extensions = [
     'php' => 'PHP',
     'module' => 'PHP',
@@ -63,7 +63,8 @@ $faults = $runner->run();
 print "phpcs Drupal: " . $faults . "\n";
 $standards_faults += $faults;
 
-$runner->config->standards = ['./vendor/drupal/coder/coder_sniffer/DrupalPractice'];
+$runner->config->standards = ['DrupalPractice'];
+$runner->init();
 $faults = $runner->run();
 print "phpcs DrupalPractice: " . $faults . "\n";
 $standards_faults += $faults;
