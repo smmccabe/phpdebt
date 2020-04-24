@@ -8,7 +8,7 @@ Currently works primarly against Drupal
 ## Installation
 
 ```
-wget https://github.com/smmccabe/phpdebt/releases/download/1.0.1/phpdebt.phar
+wget https://github.com/smmccabe/phpdebt/releases/download/1.0.2/phpdebt.phar
 chmod +x phpdebt.phar
 sudo mv phpdebt.phar /usr/local/bin/phpdebt
 ```
