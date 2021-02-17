@@ -57,6 +57,12 @@ $runner->config->extensions = [
     'info' => 'PHP',
     'js' => 'JS'
 ];
+// Accepting an argument here, this can be used to accept the PHPCS config file
+// that will override the above options.
+// Example: phpdebt module/path --standard=web/core/phpcs.xml.dist
+if (isset($argv[1])) {
+	$runner->config = new Config([$argv[1]]);
+}
 $runner->init();
 
 $faults = $runner->run();
