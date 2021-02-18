@@ -12,6 +12,7 @@ use SebastianBergmann\PHPLOC\Analyser;
 use PHP_CodeSniffer\Runner;
 use PHP_CodeSniffer\Config;
 
+$options = getopt(NULL, ['standard:']);
 $code_faults = 0;
 $standards_faults = 0;
 $path = $argv[1];
@@ -59,9 +60,9 @@ $runner->config->extensions = [
 ];
 // Accepting an argument here, this can be used to accept the PHPCS config file
 // that will override the above options.
-// Example: phpdebt module/path --standard=web/core/phpcs.xml.dist
-if (isset($argv[1])) {
-	$runner->config = new Config([$argv[1]]);
+// Example: phpdebt module/path --standard=./phpcs.xml.dist
+if (isset($options['standard'])) {
+	$runner->config = new Config($options);
 }
 $runner->init();
 
