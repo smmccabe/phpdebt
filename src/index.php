@@ -9,5 +9,5 @@ use Symfony\Component\Console\Application;
 $command = new CodeSnifferConfigCommand();
 $app = new Application();
 $app->add($command);
-$app->setDefaultCommand($command->getName(), true);
+$app->setDefaultCommand($command->getName(), TRUE);
 $app->run();

@@ -35,7 +35,7 @@ class CodeSnifferConfigCommand extends Command {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function execute(InputInterface $input, OutputInterface $output): int {
+	protected function execute(InputInterface $input, OutputInterface $output) {
 		$code_faults = 0;
 		$standards_faults = 0;
 		$path = $input->getArgument('path');
@@ -51,13 +51,15 @@ class CodeSnifferConfigCommand extends Command {
 		$runner = new Runner();
 		// If PHPCS config is provided, then execute this.
 		if ($option) {
+			define('PHP_CODESNIFFER_CBF', FALSE);
 			$runner->config = new Config(["--standard=$option"]);
-			$runner->init();
 
+			$runner->init();
 			$faults = $runner->run();
 			print "phpcs Drupal: " . $faults . "\n";
 			$standards_faults += $faults;
 
+			$runner->init();
 			$faults = $runner->run();
 			print "phpcs DrupalPractice: " . $faults . "\n";
 			$standards_faults += $faults;
@@ -90,7 +92,7 @@ class CodeSnifferConfigCommand extends Command {
 			$standards_faults += $faults;
 		}
 
-		// Lines of Code
+		// Lines of Code should be working on and anything unique about getting his local back up to date?
 		$files = (new FinderFacade([$path], [], ['*.php', '*.module', '*.install', '*.inc', '*.js', '*.scss'], []))->findFiles();
 		$count = (new Analyser)->countFiles($files, TRUE);
 		$total_lines = $count['ncloc'];
