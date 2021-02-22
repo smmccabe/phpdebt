@@ -20,7 +20,7 @@ use Symfony\Component\Console\{
  *
  * @package PHPDebt\Console\Command
  */
-class CodeSnifferConfigCommand extends Command {
+class PHPDebtCommand extends Command {
 
 	/**
 	 * {@inheritdoc}
@@ -29,7 +29,7 @@ class CodeSnifferConfigCommand extends Command {
 		$this->setName('phpdebt')
 			->addArgument('path', InputArgument::REQUIRED, 'The path of the file or directory that needs to be scanned.')
 			->addOption('standard', 's', InputOption::VALUE_REQUIRED, 'The path of the phpcs.xml.dist')
-			->setDescription('Enables option of utilizing project based PHPCS Config.');
+			->setDescription('This tool provides code quality score based on a number of standards from existing code analysis tools.');
 	}
 
 	/**
@@ -53,13 +53,13 @@ class CodeSnifferConfigCommand extends Command {
 		if ($option) {
 			define('PHP_CODESNIFFER_CBF', FALSE);
 			$runner->config = new Config(["--standard=$option"]);
+			$runner->config->files = [$path];
 
 			$runner->init();
 			$faults = $runner->run();
 			print "phpcs Drupal: " . $faults . "\n";
 			$standards_faults += $faults;
 
-			$runner->init();
 			$faults = $runner->run();
 			print "phpcs DrupalPractice: " . $faults . "\n";
 			$standards_faults += $faults;
