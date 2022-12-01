@@ -12,18 +12,15 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/smmccabe/phpmd.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/smmccabe/PHP_CodeSniffer.git"
+            "url": "https://github.com/cobenash/PHP_CodeSniffer.git"
         }
     ],
     "require": {
         "squizlabs/php_codesniffer": "dev-api-friendly as 3.x-dev",
-        "drupal/coder": "^8.3",
-        "phpmd/phpmd": "dev-api-friendly",
-        "phploc/phploc": "^6.0"
+        "drupal/coder": "8.3.13",
+        "phpmd/phpmd": "^2.13",
+        "phploc/phploc": "^7.0",
+        "symfony/finder": "^6.2"
     },
     "require-dev": {
         "clue/phar-composer": "^1.1"
