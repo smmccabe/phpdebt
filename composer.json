@@ -12,7 +12,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/cobenash/PHP_CodeSniffer.git"
+            "url": "https://github.com/smmccabe/PHP_CodeSniffer.git"
         }
     ],
     "require": {
