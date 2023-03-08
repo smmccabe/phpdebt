@@ -23,6 +23,23 @@ $code_faults = 0;
 $standards_faults = 0;
 $path = $argv[1];
 
+// Lines of code.
+$finder = Finder::create();
+$finder->files()->in($path)->filter(static function (SplFileInfo $file) {
+    return $file->isDir() || \preg_match('/\.(php|module|install|inc|js|scss)$/', $file->getPathname());
+});
+$files = [];
+foreach ($finder as $file) {
+  $files[] = $file->getRealPath();
+}
+$count = (new Analyser)->countFiles($files, TRUE);
+$total_lines = $count['ncloc'];
+
+if ($total_lines === 0) {
+  print "There is no code to analyse.\n";
+  exit;
+}
+
 /**
  * Mess Detector function.
  */
@@ -80,18 +97,6 @@ $runner->init();
 $faults = $runner->run();
 print "phpcs DrupalPractice: " . $faults . "\n";
 $standards_faults += $faults;
-
-// Lines of code.
-$finder = Finder::create();
-$finder->files()->in($path)->filter(static function (SplFileInfo $file) {
-    return $file->isDir() || \preg_match('/\.(php|module|install|inc|js|scss)$/', $file->getPathname());
-});
-$files = [];
-foreach ($finder as $file) {
-  $files[] = $file->getRealPath();
-}
-$count = (new Analyser)->countFiles($files, TRUE);
-$total_lines = $count['ncloc'];
 
 $faults = $code_faults + $standards_faults;
 $percent = ($faults / $total_lines) * 100;
